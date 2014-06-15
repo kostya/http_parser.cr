@@ -5,12 +5,6 @@ lib LibHttpParser("http_parser")
     HTTP_BOTH
   end
 
-  enum HttpMethod
-  end
-
-  enum HttpErrno
-  end
-
   struct HttpParser
   # ** PRIVATE **
     some : Int32[4]
@@ -40,9 +34,6 @@ lib LibHttpParser("http_parser")
     on_message_complete : HttpCb
   end
 
-  struct HttpParserUrl
-  end
-
   fun http_parser_version : Int64
   fun http_parser_init(HttpParser*, HttpParserType)
   fun http_parser_execute(HttpParser*, HttpParserSettings*, UInt8*, C::SizeT) : C::SizeT
@@ -50,7 +41,7 @@ lib LibHttpParser("http_parser")
   fun http_method_str(UInt8) : UInt8*
   fun http_errno_name(UInt8) : UInt8*
   fun http_errno_description(UInt8) : UInt8*
-  fun http_parser_parse_url(UInt8*, C::SizeT, Int32, HttpParserUrl*) : Int32
+  #fun http_parser_parse_url(UInt8*, C::SizeT, Int32, HttpParserUrl*) : Int32
   fun http_parser_pause(HttpParser*, Int32) : Int32
   fun http_body_is_final(HttpParser*) : Int32
 end
