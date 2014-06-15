@@ -1,0 +1,2 @@
+source :rubygems
+gem 'http_parser.rb'

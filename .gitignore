@@ -1,0 +1,7 @@
+.crystal
+.bundle
+*.o
+*.so
+all_spec
+bench
+example
