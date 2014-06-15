@@ -1,7 +1,7 @@
 CC ?= gcc
 CRYSTAL ?= crystal
 CRYSTALFLAGS ?= --release
-CFLAGS ?= -O3 
+CFLAGS ?= -O2
 
 .PHONY: all
 all: all_spec bench example
