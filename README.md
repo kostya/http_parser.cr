@@ -9,8 +9,8 @@ Install:
 git clone https://github.com/kostya/http_parser.cr.git
 cd http_parser.cr
 
-git submodules init
-git submodules update
+git submodule init
+git submodule update
 
 make
 
