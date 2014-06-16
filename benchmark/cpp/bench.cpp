@@ -5,7 +5,7 @@
 
 using namespace std;
 
-string str = "GET / HTTP/1.1\r\nHost: www.example.com\r\nConnection: keep-alive\r\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.78 S\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Encoding: gzip,deflate,sdch\r\nAccept-Language: en-US,en;q=0.8\r\nAccept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3\r\n\r\n\r\n";
+string str = "GET / HTTP/1.1\nHost: www.example.com\nConnection: keep-alive\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.78 S\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\nAccept-Encoding: gzip,deflate,sdch\nAccept-Language: en-US,en;q=0.8\nAccept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3\n\n";
 
 map<string, string> headers;
 
@@ -48,10 +48,6 @@ Parser* get_parser(http_parser* p) {
   return (Parser*)p->data;
 }
 
-int on_message_begin(http_parser* s) {
-  return 0;
-}
-
 int on_header_field(http_parser* s, const char* at, size_t length) {
   get_parser(s)->on_header_field(string(at, length));
   return 0;
@@ -76,7 +72,7 @@ int on_url(http_parser* s, const char* at, size_t length) {
 int main(){
   printf("begin %s \n", str.c_str());
   http_parser_settings* settings = new http_parser_settings();
-  settings->on_message_begin = on_message_begin;
+  settings->on_message_begin = NULL;
   settings->on_url = on_url;
   settings->on_header_field = on_header_field;
   settings->on_header_value = on_header_value;
