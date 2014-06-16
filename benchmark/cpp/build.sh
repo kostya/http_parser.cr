@@ -1,2 +1,1 @@
-g++ -c -O2 bench.cpp -o bench.o
-g++ bench.o ../../http_parser.o -o bench_cpp
+g++ -O2 bench.cpp ../../http-parser/http_parser.c -o bench_cpp
