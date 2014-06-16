@@ -42,7 +42,7 @@ public:
   }
 };
 
-Parser* get_parser(http_parser* p) {
+inline Parser* get_parser(http_parser* p) {
   return (Parser*)p->data;
 }
 
