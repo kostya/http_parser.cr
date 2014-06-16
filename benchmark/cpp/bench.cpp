@@ -15,29 +15,29 @@ public:
   string request_url;
   http_parser parser;
 
-  Parser() {
+  inline Parser() {
     done = 0;
     http_parser_init(&parser, HTTP_REQUEST);
     parser.data = (void*)this;
   }
 
-  void push(http_parser_settings *settings, string str) {
+  inline void push(http_parser_settings *settings, string str) {
     int res = http_parser_execute(&parser, settings, str.c_str(), str.length());
   }
 
-  void on_header_field(string s) {
+  inline void on_header_field(string s) {
     current_header_field = s;
   }
 
-  void on_header_value(string s) {
+  inline void on_header_value(string s) {
     headers[current_header_field] = s;
   }
 
-  void on_url(string url) {
+  inline void on_url(string url) {
     request_url = url;
   }
 
-  void on_message_complete() {
+  inline void on_message_complete() {
     done = 1;
   }
 };
