@@ -68,7 +68,6 @@ int on_url(http_parser* s, const char* at, size_t length) {
 
 
 int main(){
-  printf("begin %s \n", str.c_str());
   http_parser_settings* settings = new http_parser_settings();
   settings->on_message_begin = NULL;
   settings->on_url = on_url;
