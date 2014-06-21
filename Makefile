@@ -11,6 +11,12 @@ all_spec: *.cr spec/*.cr libhttp_parser.so
 
 bench: *.cr benchmark/bench.cr libhttp_parser.so
 	LIBRARY_PATH=`pwd` LD_LIBRARY_PATH=`pwd` $(CRYSTAL) benchmark/bench.cr $(CRYSTALFLAGS) -o $@
+	
+bench_cpp: benchmark/cpp/bench.cpp http_parser.o
+	$(CC) $(CFLAGS) $< -o $@ -lstdc++
+
+bench_native: benchmark/native_bench.cr
+	$(CRYSTAL) $< $(CRYSTALFLAGS) -o $@
 
 example: *.cr examples/example.cr libhttp_parser.so
 	LIBRARY_PATH=`pwd` LD_LIBRARY_PATH=`pwd` $(CRYSTAL) examples/example.cr $(CRYSTALFLAGS) -o $@
@@ -23,4 +29,4 @@ http_parser.o: http-parser/http_parser.c http-parser/http_parser.h
 
 .PHONY: clean
 clean:
-	rm -f example bench all_spec *.o *.so
+	rm -f example bench all_spec bench_cpp bench_native *.o *.so
