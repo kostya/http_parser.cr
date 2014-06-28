@@ -40,7 +40,7 @@ class HttpParser::CommonParser
   end
 
   def body_final?
-    HttpParser::Lib.http_body_is_final(@http_parser) == 0
+    HttpParser::Lib.http_body_is_final(@http_parser) > 0
   end
 
   def keep_alive!

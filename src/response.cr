@@ -1,6 +1,5 @@
 class HttpParser::Response < HttpParser::CommonParser
   getter :body
-  getter :done
   getter :headers
 
   init_http_parser_settings
@@ -30,10 +29,4 @@ class HttpParser::Response < HttpParser::CommonParser
   end
 
   callback_data :on_body
-
-  def on_message_complete
-    @done = true
-  end
-
-  callback :on_message_complete
 end
