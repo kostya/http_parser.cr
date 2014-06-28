@@ -9,13 +9,6 @@ class HttpParser::CommonParser
     s
   end
 
-  macro init_http_parser_settings
-    $http_parser_settings_{{@name.identify.id}} = Pointer(HttpParser::Lib::HttpParserSettings).malloc(1)
-    def self.http_parser_settings
-      $http_parser_settings_{{@name.identify.id}}
-    end
-  end
-
   def initialize(type, @check_parsed = true)
     @http_parser = Pointer(HttpParser::Lib::HttpParser).malloc(1)
     HttpParser::Lib.http_parser_init(@http_parser, type)
@@ -85,6 +78,13 @@ class HttpParser::CommonParser
 
   def upgrade?
     (@http_parser.value.http_errno & 128) > 0
+  end
+
+  macro init_http_parser_settings
+    $http_parser_settings_{{@name.identify.id}} = Pointer(HttpParser::Lib::HttpParserSettings).malloc(1)
+    def self.http_parser_settings
+      $http_parser_settings_{{@name.identify.id}}
+    end
   end
 
   macro callback(name)
