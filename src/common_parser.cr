@@ -6,11 +6,11 @@ class HttpParser::CommonParser
   def initialize(type, @check_parsed = true)
     @http_parser = Pointer(HttpParser::Lib::HttpParser).malloc(1)
     HttpParser::Lib.http_parser_init(@http_parser, type)
-    @http_parser.value.data = self as Void*
+    @http_parser->data = self as Void*
   end
 
   def self.as(s : HttpParser::Lib::HttpParser*)
-    s.value.data as self
+    s->data as self
   end
 
   def <<(data : String)
@@ -36,11 +36,11 @@ class HttpParser::CommonParser
   end
 
   def http_major
-    @http_parser.value.http_major
+    @http_parser->http_major
   end
 
   def http_minor
-    @http_parser.value.http_minor
+    @http_parser->http_minor
   end
 
   def http_version
@@ -48,11 +48,11 @@ class HttpParser::CommonParser
   end
 
   def status
-    @http_parser.value.status_code
+    @http_parser->status_code
   end
 
   def method_code
-    @http_parser.value.method
+    @http_parser->method
   end
 
   def method
@@ -60,7 +60,7 @@ class HttpParser::CommonParser
   end
 
   def http_errno
-    @http_parser.value.http_errno & 127
+    @http_parser->http_errno & 127
   end
 
   def http_errno_name
@@ -72,7 +72,7 @@ class HttpParser::CommonParser
   end
 
   def upgrade?
-    (@http_parser.value.http_errno & 128) > 0
+    (@http_parser->http_errno & 128) > 0
   end
 
   macro init_http_parser_settings
@@ -83,7 +83,7 @@ class HttpParser::CommonParser
   end
 
   macro callback(name)
-    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*) do
+    $http_parser_settings_{{@name.identify.id}}->{{name.id}} = ->(s : HttpParser::Lib::HttpParser*) do
       parser = {{@name.id}}.as(s)
       res = parser.{{name.id}}
       if res.is_a?(Symbol) && res == :stop
@@ -95,7 +95,7 @@ class HttpParser::CommonParser
   end
 
   macro callback_data(name)
-    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*, b : UInt8*, l : UInt64) do
+    $http_parser_settings_{{@name.identify.id}}->{{name.id}} = ->(s : HttpParser::Lib::HttpParser*, b : UInt8*, l : UInt64) do
       parser = {{@name.id}}.as(s)
       res = parser.{{name.id}}(String.new(b, l.to_i))
       if res.is_a?(Symbol) && res == :stop
