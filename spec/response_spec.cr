@@ -20,13 +20,13 @@ Content-Type: text/html; charset=utf-8
 <html> </html>
 "
     parser << str
+    parser << "somebody\n"
+
     parser.http_version.should eq("1.1")
     #parser.done.should be_true
     parser.headers["Content-Length"].should eq("199814")
-    parser.method.should eq(200)
-
-    parser.status.should eq("")
-    parser.body.should eq("")
+    parser.status.should eq(200)
+    parser.body.should eq("<html> </html>\nsomebody\n")
 
     parser.http_errno_name.should eq("HPE_OK")
     parser.http_errno_description.should eq("success")
