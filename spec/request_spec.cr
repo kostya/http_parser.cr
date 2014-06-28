@@ -30,7 +30,7 @@ Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3
       parser = HttpParser::Request.create
       parser << "WHAT?"
       fail "Could not parse data entirely (0 != 5)"
-    rescue PureHttpParser::Error
+    rescue HttpParser::CommonParser::Error
     end
   end
 end
