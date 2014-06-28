@@ -83,7 +83,7 @@ class HttpParser::CommonParser
   end
 
   macro callback(name)
-    $http_parser_settings_{{@name.identify.id}}->{{name.id}} = ->(s : HttpParser::Lib::HttpParser*) do
+    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*) do
       parser = {{@name.id}}.as(s)
       res = parser.{{name.id}}
       if res.is_a?(Symbol) && res == :stop
@@ -95,7 +95,7 @@ class HttpParser::CommonParser
   end
 
   macro callback_data(name)
-    $http_parser_settings_{{@name.identify.id}}->{{name.id}} = ->(s : HttpParser::Lib::HttpParser*, b : UInt8*, l : UInt64) do
+    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*, b : UInt8*, l : UInt64) do
       parser = {{@name.id}}.as(s)
       res = parser.{{name.id}}(String.new(b, l.to_i))
       if res.is_a?(Symbol) && res == :stop
