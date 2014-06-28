@@ -3,25 +3,25 @@ class HttpParser::CommonParser
 
   property :http_parser
 
-  def self.create(type = LibHttpParser::HttpParserType::HTTP_REQUEST)
+  def self.create(type = HttpParser::Lib::HttpParserType::HTTP_REQUEST)
     s = new(type)
     s.http_parser.value.data = pointerof(s) as Void*
     s
   end
 
   macro init_http_parser_settings
-    $http_parser_settings_{{@name.identify.id}} = Pointer(LibHttpParser::HttpParserSettings).malloc(1)
+    $http_parser_settings_{{@name.identify.id}} = Pointer(HttpParser::Lib::HttpParserSettings).malloc(1)
     def self.http_parser_settings
       $http_parser_settings_{{@name.identify.id}}
     end
   end
 
   def initialize(type, @check_parsed = true)
-    @http_parser = Pointer(LibHttpParser::HttpParser).malloc(1)
-    LibHttpParser.http_parser_init(@http_parser, type)
+    @http_parser = Pointer(HttpParser::Lib::HttpParser).malloc(1)
+    HttpParser::Lib.http_parser_init(@http_parser, type)
   end
 
-  def self.as(s : LibHttpParser::HttpParser*)
+  def self.as(s : HttpParser::Lib::HttpParser*)
     (s.value.data as self*).value
   end
 
@@ -30,7 +30,7 @@ class HttpParser::CommonParser
   end
 
   def push(raw : UInt8*, size : Int32)
-    res = LibHttpParser.http_parser_execute(@http_parser, class.http_parser_settings, raw, size.to_u64)
+    res = HttpParser::Lib.http_parser_execute(@http_parser, class.http_parser_settings, raw, size.to_u64)
 
     if @check_parsed && res != size
       raise Error.new("Could not parse data entirely (#{res} != #{size})") 
@@ -40,11 +40,11 @@ class HttpParser::CommonParser
   end
 
   def body_final?
-    LibHttpParser.http_body_is_final(@http_parser) == 0
+    HttpParser::Lib.http_body_is_final(@http_parser) == 0
   end
 
   def keep_alive!
-    LibHttpParser.http_should_keep_alive(@http_parser)
+    HttpParser::Lib.http_should_keep_alive(@http_parser)
   end
 
   def http_major
@@ -68,7 +68,7 @@ class HttpParser::CommonParser
   end
 
   def method
-    String.new(LibHttpParser.http_method_str(method_code))
+    String.new(HttpParser::Lib.http_method_str(method_code))
   end
 
   def http_errno
@@ -76,11 +76,11 @@ class HttpParser::CommonParser
   end
 
   def http_errno_name
-    String.new(LibHttpParser.http_errno_name(http_errno))
+    String.new(HttpParser::Lib.http_errno_name(http_errno))
   end
 
   def http_errno_description
-    String.new(LibHttpParser.http_errno_description(http_errno))
+    String.new(HttpParser::Lib.http_errno_description(http_errno))
   end
 
   def upgrade?
@@ -88,7 +88,7 @@ class HttpParser::CommonParser
   end
 
   macro callback(name)
-    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s: LibHttpParser::HttpParser*) {
+    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s: HttpParser::Lib::HttpParser*) {
       parser = {{@name.id}}.as(s)
       res = parser.{{name.id}}
       if res.is_a?(Symbol) && res == :stop
@@ -100,7 +100,7 @@ class HttpParser::CommonParser
   end
 
   macro callback_data(name)
-    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s : LibHttpParser::HttpParser*, b : UInt8*, l : UInt64) {
+    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*, b : UInt8*, l : UInt64) {
       parser = {{@name.id}}.as(s)
       res = parser.{{name.id}}(String.new(b, l.to_i))
       if res.is_a?(Symbol) && res == :stop
