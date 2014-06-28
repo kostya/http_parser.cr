@@ -10,7 +10,7 @@ class HttpParser::CommonParser
   end
 
   def self.as(s : HttpParser::Lib::HttpParser*)
-    (s.value.data as self*).value
+    s.value.data as self
   end
 
   def <<(data : String)
