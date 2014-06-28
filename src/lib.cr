@@ -48,5 +48,6 @@ module HttpParser
   end
 end
 
-lib _LibHttpParser("http_parser")
+# TODO, Why this needed?
+lib LibHttpParser("http_parser") 
 end
