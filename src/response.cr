@@ -9,7 +9,6 @@ class HttpParser::Response < HttpParser::CommonParser
     @headers = {} of String => String
     @current_header_field = ""
     @body = ""
-    @done = false
   end
 
   def on_header_field(s)
