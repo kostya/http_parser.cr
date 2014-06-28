@@ -3,7 +3,7 @@ require "spec_helper"
 class MyTestParser < HttpParser::CommonParser
   init_http_parser_settings
 
-  def initialize(type)
+  def initialize(type = HttpParser::Lib::HttpParserType::HTTP_REQUEST)
     super(type)
 
     @begin = false
