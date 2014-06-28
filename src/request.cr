@@ -5,8 +5,8 @@ class HttpParser::Request < HttpParser::CommonParser
 
   init_http_parser_settings
 
-  def initialize(tp)
-    super(HttpParser::Lib::HttpParserType::HTTP_REQUEST)
+  def initialize
+    super(HttpParser::Lib::HttpParserType::HTTP_REQUEST, true)
     @headers = {} of String => String
     @current_header_field = ""
     @request_url = ""

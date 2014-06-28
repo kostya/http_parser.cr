@@ -4,8 +4,8 @@ class HttpParser::Response < HttpParser::CommonParser
 
   init_http_parser_settings
 
-  def initialize(tp)
-    super(HttpParser::Lib::HttpParserType::HTTP_RESPONSE)
+  def initialize
+    super(HttpParser::Lib::HttpParserType::HTTP_RESPONSE, true)
     @headers = {} of String => String
     @current_header_field = ""
     @body = ""
