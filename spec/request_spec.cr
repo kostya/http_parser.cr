@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "HttpParser" do
+describe "HttpParser::Request" do
   it "default parser work" do
     parser = HttpParser::Request.create
 

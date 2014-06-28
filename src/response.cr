@@ -1,15 +1,15 @@
-class HttpParser::Request < HttpParser::CommonParser
-  getter :request_url
+class HttpParser::Response < HttpParser::CommonParser
+  getter :body
   getter :done
   getter :headers
 
   init_http_parser_settings
 
   def initialize(tp)
-    super(HttpParser::Lib::HttpParserType::HTTP_REQUEST)
+    super(HttpParser::Lib::HttpParserType::HTTP_RESPONSE)
     @headers = {} of String => String
     @current_header_field = ""
-    @request_url = ""
+    @body = ""
     @done = false
   end
 
@@ -25,11 +25,11 @@ class HttpParser::Request < HttpParser::CommonParser
 
   callback_data :on_header_value
 
-  def on_url(url)
-    @request_url = url
+  def on_body(chunk)
+    @body << chunk
   end
 
-  callback_data :on_url
+  callback_data :on_body
 
   def on_message_complete
     @done = true
