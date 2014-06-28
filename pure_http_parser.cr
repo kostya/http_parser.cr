@@ -12,9 +12,9 @@ class PureHttpParser
   end
 
   macro init_http_parser_settings
-    $http_parser_settings_{{@name.id}} = Pointer(LibHttpParser::HttpParserSettings).malloc(1)
+    $http_parser_settings_{{@name.identify.id}} = Pointer(LibHttpParser::HttpParserSettings).malloc(1)
     def self.http_parser_settings
-      $http_parser_settings_{{@name.id}}
+      $http_parser_settings_{{@name.identify.id}}
     end
   end
 
@@ -86,7 +86,7 @@ class PureHttpParser
   end
 
   macro callback(name)
-    $http_parser_settings_{{@name.id}}.value.{{name.id}} = ->(s: LibHttpParser::HttpParser*) {
+    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s: LibHttpParser::HttpParser*) {
       parser = {{@name.id}}.as(s)
       res = parser.{{name.id}}
       if res.is_a?(Symbol) && res == :stop
@@ -98,7 +98,7 @@ class PureHttpParser
   end
 
   macro callback_data(name)
-    $http_parser_settings_{{@name.id}}.value.{{name.id}} = ->(s : LibHttpParser::HttpParser*, b : UInt8*, l : UInt64) {
+    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s : LibHttpParser::HttpParser*, b : UInt8*, l : UInt64) {
       parser = {{@name.id}}.as(s)
       res = parser.{{name.id}}(String.new(b, l.to_i))
       if res.is_a?(Symbol) && res == :stop
