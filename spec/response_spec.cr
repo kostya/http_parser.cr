@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "HttpParser::Response" do
   it "default parser work" do
-    parser = HttpParser::Response.create
+    parser = HttpParser::Response.new
 
     str = "HTTP/1.1 200 OK
 Date: Sat, 28 Jun 2014 14:05:38 GMT

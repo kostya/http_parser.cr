@@ -3,15 +3,10 @@ class HttpParser::CommonParser
 
   property :http_parser
 
-  def self.create(type = HttpParser::Lib::HttpParserType::HTTP_REQUEST)
-    s = new(type)
-    s.http_parser.value.data = pointerof(s) as Void*
-    s
-  end
-
   def initialize(type, @check_parsed = true)
     @http_parser = Pointer(HttpParser::Lib::HttpParser).malloc(1)
     HttpParser::Lib.http_parser_init(@http_parser, type)
+    @http_parser.value.data = self as Void*
   end
 
   def self.as(s : HttpParser::Lib::HttpParser*)

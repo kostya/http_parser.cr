@@ -14,7 +14,7 @@ Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3
 
 "
 
-parser = HttpParser::Request.create
+parser = HttpParser::Request.new
 parser << str
 
 p parser.headers

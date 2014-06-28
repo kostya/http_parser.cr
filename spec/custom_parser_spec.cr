@@ -67,7 +67,7 @@ end
 
 describe "custom http parser" do
   it "should parse" do
-    parser = MyTestParser.create
+    parser = MyTestParser.new
 
     str = "POST /path/script.cgi HTTP/1.0
 From: frog@jmarshall.com
