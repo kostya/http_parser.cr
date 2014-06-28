@@ -1,6 +1,6 @@
 require "spec_helper"
 
-class MyTestParser < PureHttpParser
+class MyTestParser < HttpParser::CommonParser
   init_http_parser_settings
 
   def initialize(type)

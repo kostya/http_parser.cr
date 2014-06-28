@@ -16,7 +16,7 @@ t = Time.now
 s = 0
 
 100000.times do
-  parser = HttpParser.create
+  parser = HttpParser::Request.create
   parser << str
   s += parser.headers.length
 end

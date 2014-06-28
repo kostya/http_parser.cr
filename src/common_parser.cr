@@ -1,6 +1,4 @@
-require "lib_http_parser"
-
-class PureHttpParser
+class HttpParser::CommonParser
   class Error < Exception; end
 
   property :http_parser
@@ -18,7 +16,7 @@ class PureHttpParser
     end
   end
 
-  def initialize(type)
+  def initialize(type, @check_parsed = true)
     @http_parser = Pointer(LibHttpParser::HttpParser).malloc(1)
     LibHttpParser.http_parser_init(@http_parser, type)
   end
@@ -33,7 +31,11 @@ class PureHttpParser
 
   def push(raw : UInt8*, size : Int32)
     res = LibHttpParser.http_parser_execute(@http_parser, class.http_parser_settings, raw, size.to_u64)
-    raise Error.new("Could not parse data entirely (#{res} != #{size})") if res != size
+
+    if @check_parsed && res != size
+      raise Error.new("Could not parse data entirely (#{res} != #{size})") 
+    end
+
     res
   end
 

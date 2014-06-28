@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "HttpParser" do
   it "default parser work" do
-    parser = HttpParser.create
+    parser = HttpParser::Request.create
 
     str = "
 GET / HTTP/1.1
@@ -27,7 +27,7 @@ Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3
 
   it "raise error on invalid data" do
     begin
-      parser = HttpParser.create
+      parser = HttpParser::Request.create
       parser << "WHAT?"
       fail "Could not parse data entirely (0 != 5)"
     rescue PureHttpParser::Error

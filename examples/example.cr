@@ -1,5 +1,7 @@
 require "../http_parser"
 
+puts HttpParser.version_string
+
 str = "
 GET / HTTP/1.1
 Host: www.example.com
@@ -12,7 +14,7 @@ Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3
 
 "
 
-parser = HttpParser.create
+parser = HttpParser::Request.create
 parser << str
 
 p parser.headers

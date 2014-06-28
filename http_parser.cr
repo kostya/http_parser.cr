@@ -1,48 +1,24 @@
-require "pure_http_parser"
+module HttpParser  
+end
+require "src/*"
 
-class HttpParser < PureHttpParser
-  getter :request_url
-  getter :done
-  getter :headers
+module HttpParser
+  VERSION = "0.3"
 
-  init_http_parser_settings
-
-  def initialize(tp)
-    super(tp)
-    @headers = {} of String => String
-    @current_header_field = ""
-    @request_url = ""
-    @done = false
+  def self.lib_version
+    version = LibHttpParser::http_parser_version
+    major = (version >> 16) & 255
+    minor = (version >> 8) & 255
+    patch = (version) & 255
+    { major, minor, patch }
   end
 
-  def on_header_field(s : String)
-    @current_header_field = s
+  def self.lib_version_string
+    major, minor, patch = lib_version
+    "#{major}.#{minor}.#{patch}"
   end
 
-  callback_data :on_header_field
-
-  def on_header_value(s : String)
-    @headers[@current_header_field] = s
-  end
-
-  callback_data :on_header_value
-
-  def on_url(url : String)
-    @request_url = url
-  end
-
-  callback_data :on_url
-
-  def on_message_complete
-    @done = true
-  end
-
-  callback :on_message_complete
-
-  def reset!
-    @headers = {} of String => String
-    @current_header_field = ""
-    @request_url = ""
-    @done = false
+  def self.version_string
+    "HttpParser.cr v#{VERSION} (libhttp_parser v#{lib_version_string})"
   end
 end
