@@ -1,5 +1,5 @@
 module HttpParser
-  lib Lib
+  lib Lib("http_parser")
     enum HttpParserType
       HTTP_REQUEST
       HTTP_RESPONSE
