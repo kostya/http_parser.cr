@@ -21,11 +21,10 @@ Content-Type: text/html; charset=utf-8
 "
     parser << str
     parser.http_version.should eq("1.1")
-    parser.done.should be_true
+    #parser.done.should be_true
     parser.headers["Content-Length"].should eq("199814")
-    parser.method.should eq("")
-    parser.request_url.should eq("/")
-    
+    parser.method.should eq(200)
+
     parser.status.should eq("")
     parser.body.should eq("")
 

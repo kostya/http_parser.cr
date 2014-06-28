@@ -26,7 +26,7 @@ class HttpParser::Response < HttpParser::CommonParser
   callback_data :on_header_value
 
   def on_body(chunk)
-    @body << chunk
+    @body += chunk
   end
 
   callback_data :on_body
