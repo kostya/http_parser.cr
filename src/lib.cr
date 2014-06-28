@@ -48,5 +48,5 @@ module HttpParser
   end
 end
 
-lib C("http_parser")
+lib _LibHttpParser("http_parser")
 end
