@@ -14,7 +14,7 @@ Cache-Control: no-cache,no-store,must-revalidate
 Pragma: no-cache
 Expires: Fri, 28 Jun 2013 14:05:38 GMT
 Last-Modified: Sat, 28 Jun 2014 18:05:38 GMT
-Content-Length: 199814
+Content-Length: 1998
 Content-Type: text/html; charset=utf-8
 
 <html> </html>
@@ -23,12 +23,18 @@ Content-Type: text/html; charset=utf-8
     parser << "somebody\n"
 
     parser.http_version.should eq("1.1")
-    parser.headers["Content-Length"].should eq("199814")
+    parser.headers["Content-Length"].should eq("1998")
     parser.status.should eq(200)
     parser.body.should eq("<html> </html>\nsomebody\n")
     parser.body_final?.should eq(false)
+    parser.done.should eq(false)
 
     parser.http_errno_name.should eq("HPE_OK")
     parser.http_errno_description.should eq("success")
+
+    parser << "a" * 1974
+    parser << "\n"
+    parser.done.should eq(true)
+    #parser.body_final?.should eq(true)
   end
 end

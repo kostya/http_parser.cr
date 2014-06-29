@@ -1,6 +1,7 @@
 class HttpParser::Response < HttpParser::CommonParser
   getter :body
   getter :headers
+  getter :done
 
   init_http_parser_settings
 
@@ -9,6 +10,7 @@ class HttpParser::Response < HttpParser::CommonParser
     @headers = {} of String => String
     @current_header_field = ""
     @body = ""
+    @done = false
   end
 
   def on_header_field(s)
@@ -28,4 +30,8 @@ class HttpParser::Response < HttpParser::CommonParser
   end
 
   callback_data :on_body
+
+  def on_message_complete
+    @done = true
+  end
 end
