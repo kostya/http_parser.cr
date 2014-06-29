@@ -34,4 +34,6 @@ class HttpParser::Response < HttpParser::CommonParser
   def on_message_complete
     @done = true
   end
+
+  callback :on_message_complete
 end
