@@ -75,6 +75,10 @@ class HttpParser::CommonParser
     (@http_parser->http_errno & 128) > 0
   end
 
+  macro inherited
+    init_http_parser_settings
+  end
+
   macro init_http_parser_settings
     $http_parser_settings_{{@name.identify.id}} = Pointer(HttpParser::Lib::HttpParserSettings).malloc(1)
     def self.http_parser_settings

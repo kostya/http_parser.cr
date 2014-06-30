@@ -3,8 +3,6 @@ class HttpParser::Request < HttpParser::CommonParser
   getter :done
   getter :headers
 
-  init_http_parser_settings
-
   def initialize
     super(HttpParser::Lib::HttpParserType::HTTP_REQUEST, true)
     @headers = {} of String => String
