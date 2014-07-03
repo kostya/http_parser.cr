@@ -6,16 +6,12 @@ module HttpParser
   VERSION = "0.3"
 
   def self.lib_version
-    version = HttpParser::Lib.http_parser_version
-    major = (version >> 16) & 255
-    minor = (version >> 8) & 255
-    patch = (version) & 255
-    { major, minor, patch }
+    v = HttpParser::Lib.http_parser_version
+    { (v >> 16) & 255, (v >> 8) & 255, v & 255 }
   end
 
   def self.lib_version_string
-    major, minor, patch = lib_version
-    "#{major}.#{minor}.#{patch}"
+    lib_version.join "."
   end
 
   def self.version_string
