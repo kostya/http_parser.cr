@@ -6,6 +6,9 @@ CFLAGS ?= -O2
 .PHONY: all
 all: all_spec bench example bench_cpp bench_native
 
+./http-parser:
+	        git clone --depth 1 git://github.com/joyent/http-parser.git ./http-parser
+
 all_spec: *.cr src/*.cr spec/*.cr libhttp_parser.so
 	LIBRARY_PATH=`pwd` LD_LIBRARY_PATH=`pwd` $(CRYSTAL) spec/all_spec.cr $(CRYSTALFLAGS) -o $@
 
@@ -24,8 +27,8 @@ example: *.cr src/*.cr examples/example.cr libhttp_parser.so
 libhttp_parser.so: http_parser.o
 	$(CC) $< -shared -o $@
 
-http_parser.o: http-parser/http_parser.c http-parser/http_parser.h
-	$(CC) $(CFLAGS) $< -o $@ -c -fPIC
+http_parser.o: ./http-parser http-parser/http_parser.c http-parser/http_parser.h
+	$(CC) $(CFLAGS) http-parser/http_parser.c -o $@ -c -fPIC
 
 .PHONY: clean
 clean:
