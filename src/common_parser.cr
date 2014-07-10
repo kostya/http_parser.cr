@@ -80,15 +80,15 @@ class HttpParser::CommonParser
   end
 
   macro init_http_parser_settings
-    $http_parser_settings_{{@name.identify.id}} = Pointer(HttpParser::Lib::HttpParserSettings).malloc(1)
+    $http_parser_settings_{{@class_name.identify.id}} = Pointer(HttpParser::Lib::HttpParserSettings).malloc(1)
     def self.http_parser_settings
-      $http_parser_settings_{{@name.identify.id}}
+      $http_parser_settings_{{@class_name.identify.id}}
     end
   end
 
   macro callback(name)
-    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*) do
-      parser = {{@name.id}}.as(s)
+    $http_parser_settings_{{@class_name.identify.id}}.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*) do
+      parser = {{@class_name.id}}.as(s)
       res = parser.{{name.id}}
       if res.is_a?(Symbol) && res == :stop
         -1
@@ -99,8 +99,8 @@ class HttpParser::CommonParser
   end
 
   macro callback_data(name)
-    $http_parser_settings_{{@name.identify.id}}.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*, b : UInt8*, l : UInt64) do
-      parser = {{@name.id}}.as(s)
+    $http_parser_settings_{{@class_name.identify.id}}.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*, b : UInt8*, l : UInt64) do
+      parser = {{@class_name.id}}.as(s)
       res = parser.{{name.id}}(String.new(b, l.to_i))
       if res.is_a?(Symbol) && res == :stop
         -1
