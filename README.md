@@ -9,11 +9,11 @@ Install:
 git clone https://github.com/kostya/http_parser.cr.git
 cd http_parser.cr
 
-git submodule init
-git submodule update
-
 make
+```
 
+Run:
+```
 LIBRARY_PATH=`pwd` LD_LIBRARY_PATH=`pwd` ./example
 ```
 
