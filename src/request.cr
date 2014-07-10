@@ -2,12 +2,14 @@ class HttpParser::Request < HttpParser::CommonParser
   getter :request_url
   getter :done
   getter :headers
+  getter :body
 
   def initialize
     super(HttpParser::Lib::HttpParserType::HTTP_REQUEST, true)
     @headers = {} of String => String
     @current_header_field = ""
     @request_url = ""
+    @body = ""
     @done = false
   end
 
@@ -34,4 +36,10 @@ class HttpParser::Request < HttpParser::CommonParser
   end
 
   callback :on_message_complete
+
+  def on_body(body)
+    @body = body
+  end
+
+  callback_data :on_body
 end
