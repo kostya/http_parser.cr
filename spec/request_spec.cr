@@ -5,7 +5,7 @@ describe "HttpParser::Request" do
     parser = HttpParser::Request.new
 
     str = "
-GET / HTTP/1.1
+POST / HTTP/1.1
 Host: www.example.com
 Connection: keep-alive
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.78 S
