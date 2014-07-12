@@ -32,7 +32,7 @@ class HttpParser::CommonParser
   end
 
   def end
-    HttpParser::Lib.http_parser_execute(@http_parser, class.http_parser_settings, nil, 0)
+    HttpParser::Lib.http_parser_execute(@http_parser, class.http_parser_settings, nil, 0_u64)
   end
 
   def body_final?
