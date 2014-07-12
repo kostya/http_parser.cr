@@ -3,7 +3,7 @@ end
 require "src/*"
 
 module HttpParser
-  VERSION = "0.3"
+  VERSION = "0.4"
 
   def self.lib_version
     v = HttpParser::Lib.http_parser_version
