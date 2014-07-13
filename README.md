@@ -3,7 +3,7 @@ HttpParser.cr
 
 Crystal wrapper for Http Parser lib: https://github.com/joyent/http-parser
 
-Install:
+Make:
 
 ```
 git clone https://github.com/kostya/http_parser.cr.git
@@ -14,7 +14,7 @@ make
 
 Run:
 ```
-LIBRARY_PATH=`pwd` LD_LIBRARY_PATH=`pwd` ./example
+LD_LIBRARY_PATH=. ./example
 ```
 
 
