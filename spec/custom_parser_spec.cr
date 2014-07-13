@@ -27,7 +27,7 @@ class MyTestParser < HttpParser::CommonParser
   callback_data :on_header_field
 
   def on_header_value(s : String)
-    @header_value = s 
+    @header_value = s
   end
 
   callback_data :on_header_value

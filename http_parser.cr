@@ -1,4 +1,4 @@
-module HttpParser  
+module HttpParser
 end
 require "src/*"
 

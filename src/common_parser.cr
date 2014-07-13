@@ -25,7 +25,7 @@ class HttpParser::CommonParser
     res = HttpParser::Lib.http_parser_execute(@http_parser, class.http_parser_settings, raw, size.to_u64)
 
     if @check_parsed && res != size
-      raise Error.new("Could not parse data entirely (#{res} != #{size})") 
+      raise Error.new("Could not parse data entirely (#{res} != #{size})")
     end
 
     self

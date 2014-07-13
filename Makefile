@@ -14,7 +14,7 @@ all_spec: *.cr src/*.cr spec/*.cr libhttp_parser.so
 
 bench: *.cr src/*.cr benchmark/bench.cr libhttp_parser.so
 	LIBRARY_PATH=. $(CRYSTAL) benchmark/bench.cr $(CRYSTALFLAGS) -o $@
-	
+
 bench_cpp: benchmark/cpp/bench.cpp http_parser.o
 	$(CC) $(CFLAGS) $< http_parser.o -o $@ -lstdc++
 
