@@ -3,8 +3,9 @@ CRYSTAL ?= crystal
 CRYSTALFLAGS ?= --release
 CFLAGS ?= -O2
 
-.PHONY: all
+.PHONY: all package
 all: all_spec bench example bench_cpp bench_native
+package: http_parser.o
 
 ./http-parser:
 	        git clone --depth 1 git://github.com/joyent/http-parser.git ./http-parser
