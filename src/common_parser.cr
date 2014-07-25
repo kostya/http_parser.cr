@@ -6,11 +6,11 @@ class HttpParser::CommonParser
   def initialize(type, @check_parsed = true)
     @http_parser = Pointer(HttpParser::Lib::HttpParser).malloc(1)
     HttpParser::Lib.http_parser_init(@http_parser, type)
-    @http_parser->data = self as Void*
+    @http_parser.value.data = self as Void*
   end
 
   def self.as(s : HttpParser::Lib::HttpParser*)
-    s->data as self
+    s.value.data as self
   end
 
   def <<(data : String)
@@ -44,11 +44,11 @@ class HttpParser::CommonParser
   end
 
   def http_major
-    @http_parser->http_major
+    @http_parser.value.http_major
   end
 
   def http_minor
-    @http_parser->http_minor
+    @http_parser.value.http_minor
   end
 
   def http_version
@@ -56,11 +56,11 @@ class HttpParser::CommonParser
   end
 
   def status
-    @http_parser->status_code
+    @http_parser.value.status_code
   end
 
   def method_code
-    @http_parser->method
+    @http_parser.value.method
   end
 
   def method
@@ -68,7 +68,7 @@ class HttpParser::CommonParser
   end
 
   def http_errno
-    @http_parser->http_errno & 127
+    @http_parser.value.http_errno & 127
   end
 
   def http_errno_name
@@ -80,7 +80,7 @@ class HttpParser::CommonParser
   end
 
   def upgrade?
-    (@http_parser->http_errno & 128) > 0
+    (@http_parser.value.http_errno & 128) > 0
   end
 
   macro inherited
