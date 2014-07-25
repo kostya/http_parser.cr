@@ -1,4 +1,3 @@
-CC ?= gcc
 CRYSTAL ?= crystal
 CRYSTALFLAGS ?= --release
 CFLAGS ?= -O2
