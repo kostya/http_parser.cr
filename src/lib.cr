@@ -1,5 +1,9 @@
+@[Link(ldflags: "#{__DIR__}/../http_parser.o")]
+lib HttpParserLib # todo, why this is still needed?
+end
+
 module HttpParser
-  lib Lib("http_parser")
+  lib Lib
     enum HttpParserType
       HTTP_REQUEST
       HTTP_RESPONSE
@@ -46,8 +50,4 @@ module HttpParser
     fun http_parser_pause(HttpParser*, Int32) : Int32
     fun http_body_is_final(HttpParser*) : Int32
   end
-end
-
-# TODO, Why this needed?
-lib LibHttpParser("http_parser")
 end
