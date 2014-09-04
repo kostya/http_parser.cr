@@ -1,8 +1,5 @@
-@[Link(ldflags: "#{__DIR__}/../http_parser.o")]
-lib HttpParserLib # todo, why this is still needed?
-end
-
 module HttpParser
+  @[Link(ldflags: "#{__DIR__}/../http_parser.o")]
   lib Lib
     enum HttpParserType
       HTTP_REQUEST
