@@ -14,7 +14,7 @@ make
 
 Run:
 ```
-LD_LIBRARY_PATH=. ./example
+./example
 ```
 
 
