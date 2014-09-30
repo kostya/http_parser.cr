@@ -22,8 +22,8 @@ module HttpParser
       data : Void*
     end
 
-    type HttpDataCb : HttpParser*, UInt8*, C::SizeT -> Int32
-    type HttpCb : HttpParser* -> Int32
+    type HttpDataCb = HttpParser*, UInt8*, C::SizeT -> Int32
+    type HttpCb = HttpParser* -> Int32
 
     struct HttpParserSettings
       on_message_begin    : HttpCb

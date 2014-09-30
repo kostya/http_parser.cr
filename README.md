@@ -1,7 +1,7 @@
 HttpParser.cr
 -------------
 
-Crystal wrapper for Http Parser lib: https://github.com/joyent/http-parser
+Crystal(>= 0.5) wrapper for Http Parser lib: https://github.com/joyent/http-parser
 
 Make:
 
