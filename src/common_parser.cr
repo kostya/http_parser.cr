@@ -22,7 +22,7 @@ class HttpParser::CommonParser
   end
 
   def push(raw : UInt8*, size : Int32)
-    res = HttpParser::Lib.http_parser_execute(@http_parser, class.http_parser_settings, raw, size.to_u64)
+    res = HttpParser::Lib.http_parser_execute(@http_parser, self.class.http_parser_settings, raw, size.to_u64)
 
     if @check_parsed && res != size
       raise Error.new("Could not parse data entirely (#{res} != #{size})")
@@ -32,7 +32,7 @@ class HttpParser::CommonParser
   end
 
   def end
-    HttpParser::Lib.http_parser_execute(@http_parser, class.http_parser_settings, nil, 0_u64)
+    HttpParser::Lib.http_parser_execute(@http_parser, self.class.http_parser_settings, nil, 0_u64)
   end
 
   def body_final?
