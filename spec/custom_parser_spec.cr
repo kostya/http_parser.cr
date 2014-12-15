@@ -1,4 +1,4 @@
-require "spec_helper"
+require "./spec_helper"
 
 class MyTestParser < HttpParser::CommonParser
   def initialize(type = HttpParser::Lib::HttpParserType::HTTP_REQUEST)

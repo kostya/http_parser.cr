@@ -1,4 +1,4 @@
-require "spec_helper"
+require "./spec_helper"
 
 describe "HttpParser::Request" do
   it "default parser work" do

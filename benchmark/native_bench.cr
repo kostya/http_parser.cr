@@ -1,4 +1,4 @@
-require "net/http"
+require "http"
 
 str = "
 GET / HTTP/1.1
