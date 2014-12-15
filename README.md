@@ -55,4 +55,4 @@ make package
 ```
 
 this is should work from any folder:
-`crystal -e 'require "http_parser.cr/http_parser"; puts HttpParser.version_string'`
+`crystal eval 'require "http_parser.cr/http_parser"; puts HttpParser.version_string'`
