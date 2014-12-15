@@ -49,8 +49,8 @@ p parser.request_url
 ### Install as crystal package:
 ```
 cd CRYSTAL_PATH
-git clone https://github.com/kostya/http_parser.cr.git libs/http_parser.cr
-cd libs/http_parser.cr/
+git clone https://github.com/kostya/http_parser.cr.git src/http_parser.cr
+cd src/http_parser.cr/
 make package
 ```
 
