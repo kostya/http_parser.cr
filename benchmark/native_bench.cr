@@ -19,7 +19,7 @@ s = 0
 100000.times do
   io = StringIO.new(str)
   request = HTTP::Request.from_io(io)
-  s += request.headers.length
+  s += request.headers.length if request
 end
 
 p s
