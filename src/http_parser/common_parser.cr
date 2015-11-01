@@ -3,8 +3,6 @@ class HttpParser::CommonParser
 
   property :http_parser
 
-  CALLBACKS = {} of String => Pointer(HttpParser::Lib::HttpParserSettings)
-
   def initialize(type, @check_parsed = true)
     @http_parser = Pointer(HttpParser::Lib::HttpParser).malloc(1)
     HttpParser::Lib.http_parser_init(@http_parser, type)
@@ -16,11 +14,11 @@ class HttpParser::CommonParser
   end
 
   def <<(data : String)
-    push(data.cstr, data.length)
+    push(data.cstr, data.size)
   end
 
   def push(data : String)
-    push(data.cstr, data.length)
+    push(data.cstr, data.size)
   end
 
   def push(raw : UInt8*, size : Int32)
@@ -90,15 +88,15 @@ class HttpParser::CommonParser
   end
 
   macro init_http_parser_settings
-    CALLBACKS[{{@type.name.identify.stringify}}] = Pointer(HttpParser::Lib::HttpParserSettings).malloc(1)
+    $http_parser_settings_{{@type.name.identify.id}} = Pointer(HttpParser::Lib::HttpParserSettings).malloc(1)
     def self.http_parser_settings
-      CALLBACKS[{{@type.name.identify.stringify}}].not_nil!
+      $http_parser_settings_{{@type.name.identify.id}}
     end
   end
 
   macro callback(name)
-    CALLBACKS[{{@type.name.identify.stringify}}].not_nil!.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*) do
-      parser = {{@type.name}}.as(s)
+    $http_parser_settings_{{@type.name.identify.id}}.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*) do
+      parser = {{@type.name.id}}.as(s)
       res = parser.{{name.id}}
       if res.is_a?(Symbol) && res == :stop
         -1
@@ -109,8 +107,8 @@ class HttpParser::CommonParser
   end
 
   macro callback_data(name)
-    CALLBACKS[{{@type.name.identify.stringify}}].not_nil!.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*, b : UInt8*, l : UInt64) do
-      parser = {{@type.name}}.as(s)
+    self.http_parser_settings.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*, b : UInt8*, l : UInt64) do
+      parser = {{@type.name.id}}.as(s)
       res = parser.{{name.id}}(String.new(b, l.to_i))
       if res.is_a?(Symbol) && res == :stop
         -1

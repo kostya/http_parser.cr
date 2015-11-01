@@ -17,9 +17,10 @@ t = Time.now
 s = 0
 
 100000.times do
-  io = StringIO.new(str)
-  request = HTTP::Request.from_io(io)
-  s += request.headers.length if request
+  io = MemoryIO.new(str)
+  if request = HTTP::Request.from_io(io)
+    s += request.headers.size
+  end
 end
 
 p s

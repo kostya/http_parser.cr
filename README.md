@@ -1,26 +1,24 @@
-HttpParser.cr
--------------
+# CronScheduler
 
-Crystal(>= 0.7.4) wrapper for Http Parser lib: https://github.com/joyent/http-parser
+Crystal(>= 0.9) wrapper for Http Parser lib: https://github.com/joyent/http-parser.
 
-Make:
+## Installation
 
-```
-git clone https://github.com/kostya/http_parser.cr.git
-cd http_parser.cr
 
-make
-```
+Add this to your application's `shard.yml`:
 
-Run:
-```
-./example
+```yaml
+dependencies:
+  http_parser:
+    github: kostya/http_parser.cr
 ```
 
 
-Example:
-```ruby
-require "../http_parser"
+## Usage
+
+
+```crystal
+require "http_parser"
 
 puts HttpParser.version_string
 
@@ -44,15 +42,3 @@ p parser.method
 p parser.http_version
 p parser.request_url
 ```
-
-
-### Install as crystal package:
-```
-cd CRYSTAL_PATH
-git clone https://github.com/kostya/http_parser.cr.git src/http_parser.cr
-cd src/http_parser.cr/
-make package
-```
-
-this is should work from any folder:
-`crystal eval 'require "http_parser.cr/http_parser"; puts HttpParser.version_string'`

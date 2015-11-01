@@ -1,4 +1,4 @@
-require "../http_parser"
+require "../src/http_parser"
 
 str = "
 GET / HTTP/1.1
@@ -18,7 +18,7 @@ s = 0
 100000.times do
   parser = HttpParser::Request.new
   parser << str
-  s += parser.headers.length
+  s += parser.headers.size
 end
 
 p s

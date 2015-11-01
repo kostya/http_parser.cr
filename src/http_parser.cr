@@ -1,6 +1,7 @@
 module HttpParser
 end
-require "./src/*"
+
+require "./http_parser/*"
 
 module HttpParser
   VERSION = "0.5.5"

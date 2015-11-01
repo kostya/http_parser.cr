@@ -1,0 +1,7 @@
+name: http_parser
+version: 0.1.0
+
+authors:
+  - Konstantin Makarchev
+
+license: MIT

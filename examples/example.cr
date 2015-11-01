@@ -1,4 +1,4 @@
-require "../http_parser"
+require "../src/http_parser"
 
 puts HttpParser.version_string
 

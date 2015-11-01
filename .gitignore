@@ -9,3 +9,6 @@ native_bench
 bench_cpp
 bench_native
 http-parser/
+.shards
+.libs
+shard.lock
