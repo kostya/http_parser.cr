@@ -21,6 +21,10 @@ class HttpParser::CommonParser
     push(data.cstr, data.size)
   end
 
+  def push(slice : Slice(UInt8))
+    push(slice.to_unsafe, slice.size)
+  end
+
   def push(raw : UInt8*, size : Int32)
     res = HttpParser::Lib.http_parser_execute(@http_parser, self.class.http_parser_settings, raw, size.to_u64)
 
@@ -109,7 +113,7 @@ class HttpParser::CommonParser
   macro callback_data(name)
     self.http_parser_settings.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*, b : UInt8*, l : UInt64) do
       parser = {{@type.name.id}}.as(s)
-      res = parser.{{name.id}}(String.new(b, l.to_i))
+      res = parser.{{name.id}}(Slice(UInt8).new(b, l.to_i))
       if res.is_a?(Symbol) && res == :stop
         -1
       else

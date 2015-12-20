@@ -1,5 +1,5 @@
 module HttpParser
-  @[Link(ldflags: "#{__DIR__}/../http_parser.o")]
+  @[Link(ldflags: "#{__DIR__}/../ext/http_parser.o")]
   lib Lib
     enum HttpParserType
       HTTP_REQUEST

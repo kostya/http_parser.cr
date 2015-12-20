@@ -14,19 +14,19 @@ class HttpParser::Request < HttpParser::CommonParser
   end
 
   def on_header_field(s)
-    @current_header_field = s
+    @current_header_field = String.new(s)
   end
 
   callback_data :on_header_field
 
   def on_header_value(s)
-    @headers[@current_header_field] = s
+    @headers[@current_header_field] = String.new(s)
   end
 
   callback_data :on_header_value
 
   def on_url(url)
-    @request_url = url
+    @request_url = String.new(url)
   end
 
   callback_data :on_url
@@ -38,7 +38,7 @@ class HttpParser::Request < HttpParser::CommonParser
   callback :on_message_complete
 
   def on_body(body)
-    @body = body
+    @body = String.new(body)
   end
 
   callback_data :on_body

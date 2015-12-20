@@ -12,19 +12,19 @@ class HttpParser::Response < HttpParser::CommonParser
   end
 
   def on_header_field(s)
-    @current_header_field = s
+    @current_header_field = String.new(s)
   end
 
   callback_data :on_header_field
 
   def on_header_value(s)
-    @headers[@current_header_field] = s
+    @headers[@current_header_field] = String.new(s)
   end
 
   callback_data :on_header_value
 
   def on_body(chunk)
-    @body += chunk
+    @body += String.new(chunk)
   end
 
   callback_data :on_body

@@ -1,10 +1,10 @@
 name: http_parser
-version: 0.1.0
+version: 1.0
 
 authors:
   - Konstantin Makarchev
 
 scripts:
-  postinstall: make package
+  postinstall: cd ext && make package
 
 license: MIT

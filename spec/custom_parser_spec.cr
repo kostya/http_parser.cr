@@ -20,20 +20,20 @@ class MyTestParser < HttpParser::CommonParser
 
   callback :on_message_begin
 
-  def on_header_field(s : String)
-    @header_field = s
+  def on_header_field(s)
+    @header_field = String.new s
   end
 
   callback_data :on_header_field
 
-  def on_header_value(s : String)
-    @header_value = s
+  def on_header_value(s)
+    @header_value = String.new s
   end
 
   callback_data :on_header_value
 
   def on_status(s)
-    @status = s
+    @status = String.new s
   end
 
   callback_data :on_status
@@ -51,13 +51,13 @@ class MyTestParser < HttpParser::CommonParser
   callback :on_message_complete
 
   def on_url(url)
-    @url = url
+    @url = String.new url
   end
 
   callback_data :on_url
 
   def on_body(chunk)
-    @body = chunk
+    @body = String.new(chunk)
   end
 
   callback_data :on_body
@@ -87,4 +87,35 @@ home=Cosby&favorite+flavor=flies"
     parser.http_version.should eq("1.0")
     parser.method.should eq("POST")
   end
+
+  it "should parse slice" do
+    parser = MyTestParser.new
+
+    str = "POST /path/script.cgi HTTP/1.0
+From: frog@jmarshall.com
+User-Agent: HTTPTool/1.0
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 32
+
+home=Cosby&favorite+flavor=flies"
+
+    parser.push(str.to_slice)
+    parser.method.should eq("POST")
+  end
+
+  it "should parse pointer" do
+    parser = MyTestParser.new
+
+    str = "POST /path/script.cgi HTTP/1.0
+From: frog@jmarshall.com
+User-Agent: HTTPTool/1.0
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 32
+
+home=Cosby&favorite+flavor=flies"
+
+    parser.push(str.to_unsafe, str.size)
+    parser.method.should eq("POST")
+  end
+
 end
