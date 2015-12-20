@@ -25,6 +25,10 @@ class HttpParser::CommonParser
     push(slice.to_unsafe, slice.size)
   end
 
+  def <<(slice : Slice(UInt8))
+    push(slice)
+  end
+
   def push(raw : UInt8*, size : Int32)
     res = HttpParser::Lib.http_parser_execute(@http_parser, self.class.http_parser_settings, raw, size.to_u64)
 
