@@ -1,6 +1,6 @@
-# CronScheduler
+# HttpParser
 
-Crystal(>= 0.9) wrapper for Http Parser lib: https://github.com/joyent/http-parser.
+Crystal wrapper for Http Parser lib: https://github.com/joyent/http-parser.
 
 ## Installation
 
