@@ -103,7 +103,7 @@ class HttpParser::CommonParser
   end
 
   macro callback(name)
-    $http_parser_settings_{{@type.name.identify.id}}.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*) do
+    self.http_parser_settings.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*) do
       parser = {{@type.name.id}}.as(s)
       res = parser.{{name.id}}
       if res.is_a?(Symbol) && res == :stop
