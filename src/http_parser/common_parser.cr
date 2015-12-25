@@ -14,11 +14,11 @@ class HttpParser::CommonParser
   end
 
   def <<(data : String)
-    push(data.cstr, data.size)
+    push(data.to_unsafe, data.size)
   end
 
   def push(data : String)
-    push(data.cstr, data.size)
+    push(data.to_unsafe, data.size)
   end
 
   def push(slice : Slice(UInt8))
