@@ -8,7 +8,7 @@ module HttpParser
 
   def self.lib_version
     v = HttpParser::Lib.http_parser_version
-    { (v >> 16) & 255, (v >> 8) & 255, v & 255 }
+    {(v >> 16) & 255, (v >> 8) & 255, v & 255}
   end
 
   def self.lib_version_string

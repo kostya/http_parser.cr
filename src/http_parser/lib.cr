@@ -8,17 +8,17 @@ module HttpParser
     end
 
     struct HttpParser
-    # ** PRIVATE **
+      # ** PRIVATE **
       some : Int32[4]
 
-    #** READ-ONLY **
+      # ** READ-ONLY **
       http_major : UInt16
       http_minor : UInt16
       status_code : UInt16
       method : UInt8
       http_errno : UInt8
 
-    #** PUBLIC **
+      # ** PUBLIC **
       data : Void*
     end
 
@@ -26,13 +26,13 @@ module HttpParser
     type HttpCb = HttpParser* -> Int32
 
     struct HttpParserSettings
-      on_message_begin    : HttpCb
-      on_url              : HttpDataCb
-      on_status           : HttpDataCb
-      on_header_field     : HttpDataCb
-      on_header_value     : HttpDataCb
+      on_message_begin : HttpCb
+      on_url : HttpDataCb
+      on_status : HttpDataCb
+      on_header_field : HttpDataCb
+      on_header_value : HttpDataCb
       on_headers_complete : HttpCb
-      on_body             : HttpDataCb
+      on_body : HttpDataCb
       on_message_complete : HttpCb
     end
 
@@ -43,7 +43,7 @@ module HttpParser
     fun http_method_str(UInt8) : UInt8*
     fun http_errno_name(UInt8) : UInt8*
     fun http_errno_description(UInt8) : UInt8*
-    #fun http_parser_parse_url(UInt8*, LibC::SizeT, Int32, HttpParserUrl*) : Int32
+    # fun http_parser_parse_url(UInt8*, LibC::SizeT, Int32, HttpParserUrl*) : Int32
     fun http_parser_pause(HttpParser*, Int32) : Int32
     fun http_body_is_final(HttpParser*) : Int32
   end
