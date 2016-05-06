@@ -5,10 +5,14 @@ class HttpParser::Url
     self.new(url)
   end
 
-  getter :schema, :host, :path
+  FIELDS = %w(schema host port path query fragment userinfo)
+
+  {% for name in FIELDS %}
+    getter {{name}}
+  {% end %}
 
   def initialize(url)
-    res = HttpParser::Lib.http_parser_parse_url(url.to_unsafe, url.length.to_sizet, 0, out parser_struct)
+    res = HttpParser::Lib.http_parser_parse_url(url.to_unsafe, url.size, 0, out parser_struct)
 
     if res != 0
       name = String.new(HttpParser::Lib.http_errno_name(res))
@@ -16,15 +20,19 @@ class HttpParser::Url
       raise Error.new("#{name} - #{desc}")
     end
 
-    setup_variables
+    {% for name in FIELDS %}
+      setup_variable({{name}})
+    {% end %}
   end
 
-  macro setup_variables
-    %w{schema host path}.each do |name|
-      %id = HttpParser::Lib::HttpParserUrlFields::UF_{% name.upcase %}
-      %seg = parser_struct.data[%id]
-      %slice = Slice.new(url.to_unsafe + %seq.off, %seg.len)
-      @{% name %} = String.new(%slice)
+  macro setup_variable(name)
+    %id = HttpParser::Lib::HttpParserUrlFields::UF_{{ name.upcase.id }}.to_i
+    %seg = parser_struct.data[%id]
+    @{{ name.id }} = if %seg.off < url.size && %seg.len > 0
+      %slice = Slice.new(url.to_unsafe + %seg.off, %seg.len)
+      String.new(%slice)
+    else
+      ""
     end
   end
 end

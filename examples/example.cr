@@ -1,4 +1,6 @@
 require "../src/http_parser"
+require "benchmark"
+require "uri"
 
 puts HttpParser.version_string
 
@@ -21,3 +23,18 @@ p parser.headers
 p parser.method
 p parser.http_version
 p parser.request_url
+
+url = "http://mail.ru/bla"
+url = "http://foo:bar@www.example.com:8080/some/path?foo=bar#frag"
+Benchmark.ips do |x|
+  x.report("old") { URI.old_parse(url) }
+  x.report("new") { URI.parse(url) }
+  x.report("lib") { HttpParser::Url.new(url) }
+end
+    
+url = "http://foo:bar@www.#{"example"*100}.com"
+Benchmark.ips do |x|
+  x.report("old") { URI.old_parse(url) }
+  x.report("new") { URI.parse(url) }
+  x.report("lib") { HttpParser::Url.new(url) }
+end

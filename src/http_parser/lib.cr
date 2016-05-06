@@ -25,6 +25,17 @@ module HttpParser
     type HttpDataCb = HttpParser*, UInt8*, LibC::SizeT -> Int32
     type HttpCb = HttpParser* -> Int32
 
+    struct HttpParserSettings
+      on_message_begin : HttpCb
+      on_url : HttpDataCb
+      on_status : HttpDataCb
+      on_header_field : HttpDataCb
+      on_header_value : HttpDataCb
+      on_headers_complete : HttpCb
+      on_body : HttpDataCb
+      on_message_complete : HttpCb
+    end
+
     enum HttpParserUrlFields
       UF_SCHEMA   = 0
       UF_HOST
