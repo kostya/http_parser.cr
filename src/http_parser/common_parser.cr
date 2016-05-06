@@ -11,7 +11,7 @@ class HttpParser::CommonParser
     @http_parser.value.data = self as Void*
   end
 
-  def self.as(s : HttpParser::Lib::HttpParser*)
+  def self.cast(s : HttpParser::Lib::HttpParser*)
     s.value.data as self
   end
 
@@ -107,7 +107,7 @@ class HttpParser::CommonParser
 
   macro callback(name)
     self.http_parser_settings.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*) do
-      parser = {{@type.name.id}}.as(s)
+      parser = {{@type.name.id}}.cast(s)
       res = parser.{{name.id}}
       if res.is_a?(Symbol) && res == :stop
         -1
@@ -119,7 +119,7 @@ class HttpParser::CommonParser
 
   macro callback_data(name)
     self.http_parser_settings.value.{{name.id}} = ->(s : HttpParser::Lib::HttpParser*, b : UInt8*, l : UInt64) do
-      parser = {{@type.name.id}}.as(s)
+      parser = {{@type.name.id}}.cast(s)
       res = parser.{{name.id}}(Slice(UInt8).new(b, l.to_i))
       if res.is_a?(Symbol) && res == :stop
         -1
