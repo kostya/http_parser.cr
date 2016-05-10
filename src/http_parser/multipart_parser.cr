@@ -5,7 +5,7 @@ class HttpParser::MultipartParser
   @parser : HttpParser::MultipartLib::MultipartParser*
 
   def initialize(boundary : String? = nil, @check_parsed = false)
-    boundary ||= ""
+    boundary = boundary ? "--#{boundary}" : "--"
     @parser = HttpParser::MultipartLib.multipart_parser_init(boundary.to_unsafe, self.class.settings)
     HttpParser::MultipartLib.multipart_parser_set_data(@parser, self as Void*)
   end

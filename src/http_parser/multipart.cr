@@ -14,11 +14,7 @@ class HttpParser::Multipart < HttpParser::MultipartParser
   end
 
   def initialize(boundary : String? = nil)
-    if boundary
-      super("--" + boundary, true)
-    else
-      super("--", true)
-    end
+    super(boundary, true)
     @part = Part.new
     @parts = [] of Part
     @current_header_field = ""
