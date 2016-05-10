@@ -117,5 +117,4 @@ home=Cosby&favorite+flavor=flies"
     parser.push(str.to_unsafe, str.size)
     parser.method.should eq("POST")
   end
-
 end

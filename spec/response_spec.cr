@@ -35,6 +35,6 @@ Content-Type: text/html; charset=utf-8
     parser << "a" * 1974
     parser << "\n"
     parser.done.should eq(true)
-    #parser.body_final?.should eq(true)
+    # parser.body_final?.should eq(true)
   end
 end

@@ -23,4 +23,3 @@ end
 
 p s
 puts Time.now - t
-
