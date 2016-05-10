@@ -10,8 +10,6 @@ native_bench
 bench_cpp
 bench_native
 bench_multipart
-http-parser/
-multipart-parser-c
 .shards
 .libs
 shard.lock
