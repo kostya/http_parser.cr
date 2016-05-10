@@ -14,6 +14,10 @@ class HttpParser::MultipartParser
     HttpParser::MultipartLib.multipart_parser_get_data(s) as self
   end
 
+  def finalize
+    HttpParser::MultipartLib.multipart_parser_free(@parser)
+  end
+
   def <<(data : String)
     push(data.to_unsafe, data.bytesize)
   end
