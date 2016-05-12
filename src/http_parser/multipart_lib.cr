@@ -1,5 +1,5 @@
 module HttpParser
-  @[Link(ldflags: "#{__DIR__}/../ext/multipart_parser.o")]
+  @[CFile("#{__DIR__}/../ext/multipart-parser-c/multipart_parser.c")]
   lib MultipartLib
     type MultipartParser = Void*
     type MultipartDataCb = MultipartParser*, UInt8*, LibC::SizeT -> Int32
