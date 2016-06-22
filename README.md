@@ -11,6 +11,7 @@ Add this to your application's `shard.yml`:
 dependencies:
   http_parser:
     github: kostya/http_parser.cr
+    branch: master
 ```
 
 
