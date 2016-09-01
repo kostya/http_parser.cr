@@ -7,11 +7,11 @@ class HttpParser::MultipartParser
   def initialize(boundary : String? = nil, @check_parsed = false)
     boundary = boundary ? "--#{boundary}" : "--"
     @parser = HttpParser::MultipartLib.multipart_parser_init(boundary.to_unsafe, self.class.settings)
-    HttpParser::MultipartLib.multipart_parser_set_data(@parser, self as Void*)
+    HttpParser::MultipartLib.multipart_parser_set_data(@parser, self.as Void*)
   end
 
   def self.cast(s : HttpParser::MultipartLib::MultipartParser*)
-    HttpParser::MultipartLib.multipart_parser_get_data(s) as self
+    HttpParser::MultipartLib.multipart_parser_get_data(s).as self
   end
 
   def finalize

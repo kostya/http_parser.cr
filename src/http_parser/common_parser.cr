@@ -8,11 +8,11 @@ class HttpParser::CommonParser
   def initialize(type, @check_parsed = true)
     @http_parser = Pointer(HttpParser::Lib::HttpParser).malloc(1)
     HttpParser::Lib.http_parser_init(@http_parser, type)
-    @http_parser.value.data = self as Void*
+    @http_parser.value.data = self.as Void*
   end
 
   def self.cast(s : HttpParser::Lib::HttpParser*)
-    s.value.data as self
+    s.value.data.as self
   end
 
   def <<(data : String)
