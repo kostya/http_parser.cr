@@ -49,10 +49,10 @@ class HttpParser::MultipartParser
   end
 
   macro init_settings
-    $multipart_parser_settings_{{@type.name.identify.id}} : HttpParser::MultipartLib::MultipartParserSettings*
-    $multipart_parser_settings_{{@type.name.identify.id}} = Pointer(HttpParser::MultipartLib::MultipartParserSettings).malloc(1)
+    @@multipart_parser_settings_{{@type.name.identify.id}} : HttpParser::MultipartLib::MultipartParserSettings*
+    @@multipart_parser_settings_{{@type.name.identify.id}} = Pointer(HttpParser::MultipartLib::MultipartParserSettings).malloc(1)
     def self.settings
-      $multipart_parser_settings_{{@type.name.identify.id}}
+      @@multipart_parser_settings_{{@type.name.identify.id}}
     end
   end
 

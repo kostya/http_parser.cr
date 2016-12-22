@@ -98,10 +98,10 @@ class HttpParser::CommonParser
   end
 
   macro init_http_parser_settings
-    $http_parser_settings_{{@type.name.identify.id}} : HttpParser::Lib::HttpParserSettings*
-    $http_parser_settings_{{@type.name.identify.id}} = Pointer(HttpParser::Lib::HttpParserSettings).malloc(1)
+    @@http_parser_settings_{{@type.name.identify.id}} : HttpParser::Lib::HttpParserSettings*
+    @@http_parser_settings_{{@type.name.identify.id}} = Pointer(HttpParser::Lib::HttpParserSettings).malloc(1)
     def self.http_parser_settings
-      $http_parser_settings_{{@type.name.identify.id}}
+      @@http_parser_settings_{{@type.name.identify.id}}
     end
   end
 
